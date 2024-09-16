@@ -16,9 +16,10 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-import cv_bridge
 import numpy as np
+np.finfo(np.dtype("float32"))
+np.finfo(np.dtype("float64"))
+import cv_bridge
 import roslib.packages
 import rospy
 from sensor_msgs.msg import Image
@@ -29,7 +30,8 @@ from ultralytics_ros.msg import YoloResult
 
 class TrackerNode:
     def __init__(self):
-        yolo_model = rospy.get_param("~yolo_model", "yolov8n.pt")
+        print("Initializing tracker node")
+        yolo_model_path = rospy.get_param("~yolo_model_path", "yolov8n.pt")
         self.input_topic = rospy.get_param("~input_topic", "image_raw")
         self.result_topic = rospy.get_param("~result_topic", "yolo_result")
         self.result_image_topic = rospy.get_param("~result_image_topic", "yolo_image")
@@ -46,8 +48,9 @@ class TrackerNode:
         self.result_labels = rospy.get_param("~result_labels", True)
         self.result_boxes = rospy.get_param("~result_boxes", True)
         path = roslib.packages.get_pkg_dir("ultralytics_ros")
-        self.model = YOLO(f"{path}/models/{yolo_model}")
-        self.model.fuse()
+        self.model = YOLO(yolo_model_path)
+        if(yolo_model_path.split('.')[-1]!='engine'):
+            self.model.fuse()
         self.sub = rospy.Subscriber(
             self.input_topic,
             Image,
@@ -60,8 +63,9 @@ class TrackerNode:
             self.result_image_topic, Image, queue_size=1
         )
         self.bridge = cv_bridge.CvBridge()
-        self.use_segmentation = yolo_model.endswith("-seg.pt")
-
+        self.use_segmentation = yolo_model_path.endswith("-seg.pt")
+        print(yolo_model_path)
+        print(self.input_topic)
     def image_callback(self, msg):
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding="bgr8")
 
@@ -72,9 +76,9 @@ class TrackerNode:
             max_det=self.max_det,
             classes=self.classes,
             tracker=self.tracker,
-            device=self.device,
             verbose=False,
             retina_masks=True,
+            persist=True, 
         )
 
         if results is not None:
@@ -82,13 +86,12 @@ class TrackerNode:
             yolo_result_image_msg = Image()
             yolo_result_msg.header = msg.header
             yolo_result_image_msg.header = msg.header
-            yolo_result_msg.detections = self.create_detections_array(results)
+            yolo_result_msg.detections = self.create_detections_array(results)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
             yolo_result_image_msg = self.create_result_image(results)
             if self.use_segmentation:
                 yolo_result_msg.masks = self.create_segmentation_masks(results)
             self.results_pub.publish(yolo_result_msg)
             self.result_image_pub.publish(yolo_result_image_msg)
-
     def create_detections_array(self, results):
         detections_msg = Detection2DArray()
         bounding_box = results[0].boxes.xywh
