@@ -68,9 +68,9 @@ For yolo_model, you can choose either a path to a "*.pt" (PyTorch) or "*.engine"
   - Plotted images to `yolo_result_image` parameter. ([sensor_msgs/Image](https://docs.ros.org/en/api/sensor_msgs/html/msg/Image.html))
   - Detected objects(2D bounding box, mask image) to `result_topic` parameter. (ultralytics_ros/YoloResult)
     ```
-  std_msgs/Header header
-  DetectionWithTrackID[] detections_with_track_id # custom message structure
-  sensor_msgs/Image[] masks
+    std_msgs/Header header
+    DetectionWithTrackID[] detections_with_track_id # custom message structure
+    sensor_msgs/Image[] masks
     ```
 ## Running the Tracker
 To launch the tracker, use the following command:
