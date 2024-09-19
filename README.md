@@ -1,6 +1,6 @@
-# ROS-Integrated YOLOv8 Banana Plant Detection System
+# ROS-Integrated YOLOv8 Banana Plant Tracking System
 
-This repository contains the ROS integration for YOLOv8-based banana plant detection using Ultralytics.
+This repository contains the ROS integration for YOLOv8-based banana plant tracking using Ultralytics.
 Special thanks to Alpaca-zip, upon whose [ultralytics_ros repository](https://github.com/Alpaca-zip/ultralytics_ros)
 this work was based.
 
@@ -8,7 +8,6 @@ this work was based.
 - YOLOv8-based object detection
 - ROS integration for tracking
 - Custom message definitions for detection results
-- Docker support
 
 ## File Overview
 - **launch/tracker.launch**: Launch file to run the tracker node.
@@ -156,7 +155,10 @@ rqt_image_view
 ```
 <img src="imgs/rqt_screenshot.png" alt="rqt" width="600" height="400"/>
 
-
+## Work Items Remaining
+- Improve YOLOv8 model by training on annotated videos of plantation rather than merely images as was done in Phase 1.
+- Prevent overcurrent of Jetson Xavier NX by optimizing resource usage.
+ 
 ## References
 ultralytics_ros
 authors:
