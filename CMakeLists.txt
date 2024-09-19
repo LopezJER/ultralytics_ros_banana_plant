@@ -30,6 +30,7 @@ find_package(PCL REQUIRED)
 
 add_message_files(
   FILES
+  DetectionWithTrackID.msg
   YoloResult.msg
 )
 
@@ -41,7 +42,6 @@ generate_messages(
 )
 
 catkin_package(
-  INCLUDE_DIRS include
   CATKIN_DEPENDS
     cv_bridge
     geometry_msgs
@@ -67,23 +67,14 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
 )
 
-add_executable(tracker_with_cloud_node src/tracker_with_cloud_node.cpp)
-target_link_libraries(tracker_with_cloud_node
-  ${catkin_LIBRARIES}
-  ${Boost_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-  ${PCL_LIBRARIES}
-)
-add_dependencies(tracker_with_cloud_node ultralytics_ros_generate_messages_cpp)
+
+
 
 install(PROGRAMS
   script/tracker_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(TARGETS tracker_with_cloud_node
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
 
 install(DIRECTORY include
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
