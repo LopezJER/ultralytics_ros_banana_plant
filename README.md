@@ -19,6 +19,9 @@ this work was based.
 - **.clang-format / .clang-tidy**: Code style configurations.
 
 ## Setup
+
+Run these commands to set up the Ultralytics ROS package for YOLOv8-based banana plant detection:
+
 ```
 $ cd ~/catkin_ws/src
 $ git clone -b noetic-devel https://github.com/LopezJER/ultralytics_ros_banana_plant
@@ -68,7 +71,7 @@ For yolo_model, you can choose either a path to a "*.pt" (PyTorch) or "*.engine"
   std_msgs/Header header
   DetectionWithTrackID[] detections_with_track_id # custom message structure
   sensor_msgs/Image[] masks
-
+    ```
 ## Running the Tracker
 To launch the tracker, use the following command:
 ```bash
@@ -150,6 +153,6 @@ To visualize the results of the tracker, use the following command and view the 
 ```bash
 rqt_image_view
 ```
-![rqt](images/Kiku.jpg)
+<img src="imgs/rqt_screenshot.png" alt="rqt" width="600" height="400"/>
 
 
