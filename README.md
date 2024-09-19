@@ -157,3 +157,12 @@ rqt_image_view
 <img src="imgs/rqt_screenshot.png" alt="rqt" width="600" height="400"/>
 
 
+## References
+ultralytics_ros
+authors:
+  - family-names: "Mori"
+    given-names: "Kimihiro"
+title: "ultralytics_ros"
+date-released: 2023-05-28
+license: "AGPL-3.0"
+url: "https://github.com/Alpaca-zip/ultralytics_ros"
