@@ -84,7 +84,7 @@ If no live camera is present, you may play a bag file that publishes the input_t
 rosbag play path_to_bag_file.bag
 ```
 ## Visualizing and Debugging
-View the published outputs of the model by issuign the following command:
+Assuming you have sourced your development environment, view the published outputs of the model by issuign the following command:
 ```bash
 rostopic echo /yolo_result
 ```
@@ -161,8 +161,8 @@ rqt_image_view
 ultralytics_ros
 authors:
   - family-names: "Mori"
-    given-names: "Kimihiro"
-title: "ultralytics_ros"
-date-released: 2023-05-28
-license: "AGPL-3.0"
-url: "https://github.com/Alpaca-zip/ultralytics_ros"
+  - given-names: "Kimihiro"
+  - title: "ultralytics_ros"
+  - date-released: 2023-05-28
+  - license: "AGPL-3.0"
+  - url: "https://github.com/Alpaca-zip/ultralytics_ros"
