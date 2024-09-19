@@ -28,7 +28,8 @@ $ git clone -b noetic-devel https://github.com/LopezJER/ultralytics_ros_banana_p
 $ python3 -m pip install -r ultralytics_ros_banana_plant/requirements.txt
 $ cd ~/catkin_ws
 $ rosdep install -r -y -i --from-paths .
-$ catkin build
+$ catkin_make
+$ source devel/setup.bash
 ```
 
 ## Configuring the Tracker
